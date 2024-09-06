@@ -28,20 +28,23 @@ export default {
 	async updateTodo(req: Request, res: Response) {
 		const { id } = req.params;
 		const { title, completed } = req.body;
-
 		try {
 			const updatedTodo = await TodoService.updateTodo(id, {
 				title,
 				completed,
 			});
 			if (updatedTodo) {
-				res.status(200).json({ status: 200, msg: updatedTodo });
+				return res.status(200).json({ status: 200, msg: updatedTodo });
 			} else {
 				return res
-					.status(400)
-					.json({ status: 400, msg: { error: "Erro ao atualizar tarefa" } });
+					.status(404)
+					.json({ status: 404, msg: { error: "Tarefa não encontrada" } });
 			}
-		} catch (error) {}
+		} catch (error) {
+			return res
+				.status(400)
+				.json({ status: 400, msg: { error: "Erro ao atualizar tarefa" } });
+		}
 	},
 
 	async deleteTodo(req: Request, res: Response) {
