@@ -10,9 +10,6 @@ const connectDB = async () => {
 	}
 
 	try {
-		if (!MONGO_URL) {
-			throw Error("Ausência da  MONGO_URL");
-		}
 		const conn = await mongoose.connect(MONGO_URL);
 		console.log(`MongoDB conectado: ${conn.connection.host}`);
 	} catch (error) {
